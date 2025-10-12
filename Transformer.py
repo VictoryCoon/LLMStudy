@@ -177,18 +177,3 @@ class Transformer(nn.Module):
         enc_output = self.encoder(src_tokens, src_mask=None)
         logits = self.decoder(target_tokens, enc_output, target_mask=target_mask, enc_mask=None)
         return logits
-
-
-B = 2
-T_src = 7
-T_tgt = 5
-src_vocab = 50
-tgt_vocab = 60
-d_model = 64
-
-model = Transformer(src_vocab, tgt_vocab, d_model=d_model, num_layers=2, num_heads=4, d_ff=256, max_length=50)
-src = torch.randint(1, src_vocab, (B, T_src))
-tgt = torch.randint(1, tgt_vocab, (B, T_tgt))
-
-logits = model(src, tgt)
-print(logits.shape)
