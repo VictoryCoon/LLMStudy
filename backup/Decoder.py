@@ -85,13 +85,13 @@ class TransformerDecoderLayer(nn.Module):
         return tgt
 
 batch_size = 2
-src_len = 7 # Encoder length (source)
+source_len = 7 # Encoder length (source)
 tgt_len = 5 # Decoder length (target)
 d_model = 16
 num_heads = 4
 d_ff = 64
 
-encoder_output = torch.randn(batch_size, src_len, d_model)
+encoder_output = torch.randn(batch_size, source_len, d_model)
 decoder_input = torch.randn(batch_size, tgt_len, d_model)
 
 tgt_mask = torch.triu(torch.ones(tgt_len, tgt_len), diagonal=1).bool()
@@ -100,7 +100,7 @@ tgt_mask = tgt_mask.unsqueeze(0).expand(batch_size, -1,-1)
 decoder_layer = TransformerDecoderLayer(d_model=d_model, num_heads=num_heads, d_ff=d_ff)
 out = decoder_layer(decoder_input, encoder_output, tgt_mask=tgt_mask, memory_mask=None)
 
-print(f"encoder_outputs.shape      : ${encoder_output.shape}")   # (B, src_len, d_model)
+print(f"encoder_outputs.shape      : ${encoder_output.shape}")   # (B, source_len, d_model)
 print(f"decoder_inputs.shape       : ${decoder_input.shape}")     # (B, tgt_len, d_model)
 print(f"tgt_mask.shape             : ${tgt_mask.shape}")                # (B, tgt_len, tgt_len)
 print(f"decoder_layer output shape : ${out.shape}")         # (B, tgt_len, d_model)

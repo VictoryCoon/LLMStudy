@@ -156,7 +156,7 @@ print("출력:", output.shape)
 """
 # hyperparams for test
 batch_size = 2
-src_len = 7
+source_len = 7
 tgt_len = 5
 vocab_size = 100
 d_model = 32
@@ -165,7 +165,7 @@ d_ff = 128
 num_layers = 3
 
 # dummy inputs
-enc_output = torch.randn(batch_size, src_len, d_model)
+enc_output = torch.randn(batch_size, source_len, d_model)
 target_tokens = torch.randint(0, vocab_size, (batch_size, tgt_len))
 
 # causal mask (1 = keep, 0 = mask)
