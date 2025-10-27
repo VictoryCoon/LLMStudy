@@ -1,4 +1,5 @@
 import re
+import torch
 from collections import Counter, defaultdict
 
 class BPETokenizer:
@@ -103,17 +104,40 @@ class BPETokenizer:
         sentence = ' '.join(tokens).replace("</w>","").strip()
         return sentence
 
+    def encode_batch(self, sentences):
+        return [self.encode_sentence(s) for s in sentences]
 
-#corpus = "low lower lowest lowly lower newest wide wider"
-corpus = "this these that thing those me you your my mine one"
+    def pad_sequences(self, sequences, max_len=None):
+        pad_id = self.token_to_id["<pad>"]
+        if max_len is None:
+            max_len = max(len(seq) for seq in sequences)
 
+        padded = []
+
+        for seq in sequences:
+            if len(seq) < max_len:
+                seq = seq + [pad_id] * (max_len - len(seq))
+            else:
+                seq = seq[:max_len]
+            padded.append(seq)
+        return padded
+
+    def batch_to_tensor(self, sentences, device="mps"):
+        encoded = self.encode_batch(sentences)
+        padded = self.pad_sequences(encoded)
+        return torch.tensor(padded, dtype=torch.long, device=device)
+
+corpus = "low lower lowest lowly lower newest wide wider"
 tokenizer = BPETokenizer()
 tokenizer.train(corpus, num_merges=30)
 
-sentence = "This is your thing."
-encoded = tokenizer.encode_sentence(sentence)
-decoded = tokenizer.decode_sentence(encoded)
+sentences = [
+    "low lowest",
+    "wide wider lowly",
+    "newest low"
+]
 
-#print("원문:", sentence)
-#print("인코딩:", encoded)
-#print("디코딩:", decoded)
+batch_tensor = tokenizer.batch_to_tensor(sentences)
+
+print("🔹 Batch Tensor Shape:", batch_tensor.shape)
+print("🔹 Batch Tensor:\n", batch_tensor)
