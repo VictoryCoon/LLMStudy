@@ -127,17 +127,7 @@ class BPETokenizer:
         padded = self.pad_sequences(encoded)
         return torch.tensor(padded, dtype=torch.long, device=device)
 
-corpus = "low lower lowest lowly lower newest wide wider"
-tokenizer = BPETokenizer()
-tokenizer.train(corpus, num_merges=30)
-
-sentences = [
-    "low lowest",
-    "wide wider lowly",
-    "newest low"
-]
-
-batch_tensor = tokenizer.batch_to_tensor(sentences)
-
-print("🔹 Batch Tensor Shape:", batch_tensor.shape)
-print("🔹 Batch Tensor:\n", batch_tensor)
+    def show_merges(self, n=10):
+        print("Top merges:")
+        for i, pair in enumerate(self.merges[:n]):
+            print(f"{i+1:3d}: {pair}")

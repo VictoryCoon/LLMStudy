@@ -40,3 +40,5 @@ https://torpid-salesman-43a.notion.site/LLM-Shoveling-3-Linear-why-2905b5313c0b8
 https://torpid-salesman-43a.notion.site/LLM-Shoveling-4-Vector-2925b5313c0b80338fb5d0327ccf349b?source=copy_link
 ## Tokenizer
 https://torpid-salesman-43a.notion.site/LLM-Shoveling-5-Tokenizer-2985b5313c0b80ba913cee733e17421e?source=copy_link
+## Learning
+https://torpid-salesman-43a.notion.site/LLM-Shoveling-6-Learning-29a5b5313c0b806fba93ec1939f33452?source=copy_link
